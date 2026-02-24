@@ -62,10 +62,11 @@ jobs:
           IMAGE_REF=$(docker inspect --format='{{index .RepoDigests 0}}' localhost:5000/net-monitor:v1)
           echo "IMAGE=$IMAGE_REF" >> $GITHUB_ENV
 
-
-      - name: Show image digest
+      - name: Download TSA root certificate
         run: |
-          echo "${IMAGE}"
+          mkdir -p .github/certs
+          curl -o .github/certs/msft-tsa-root.crt \
+            "http://www.microsoft.com/pkiops/certs/microsoft%20identity%20verification%20root%20certificate%20authority%202020.crt"
 
       - name: Azure login
         uses: azure/login@v2
@@ -74,15 +75,14 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Check image unsigned
-        run: |
-          notation ls "${IMAGE}"
+      - name: Sign image (with timestamp)
+        uses: notaryproject/notation-action/sign@v1
+        with:
+          plugin_name: azure-artifactsigning
+          key_id: jaxelr
+          target_artifact_reference: ${{ env.IMAGE }}
+          timestamp_url: "http://timestamp.acs.microsoft.com/"
+          timestamp_root_cert: ".github/certs/msft-tsa-root.crt"
 
-      - name: Sign image
-        run: |
-          notation sign --key "jaxelr-key" "${IMAGE}"
-
-      - name: Check signed image 
-        run: |
-          notation ls "${IMAGE}"
-
+      - name: Check image (post-sign)
+        run: notation ls "$IMAGE"
