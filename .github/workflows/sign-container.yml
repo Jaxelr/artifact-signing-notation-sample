@@ -54,7 +54,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Sign image (with timestamp)
+      - name: Sign image
         uses: notaryproject/notation-action/sign@v1
         with:
           plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.0_linux_amd64.tar.gz 
