@@ -26,3 +26,34 @@ jobs:
 
       - name: Verify plugin installed
         run: notation plugin ls
+
+      - name: Add notation key
+        run: |
+          notation key add "jaxelr-key" \
+            --plugin azure-artifactsigning \
+            --plugin-config accountName="jaxelr" \
+            --plugin-config certProfile="jaxelr-pt" \
+            --plugin-config baseUrl="https://eus.codesigning.azure.net/" \
+            --id "jaxelr"
+
+      - name: Verify key added
+        run: notation key ls
+
+      - name: Start local OCI registry
+        run: |
+          docker run -d -p 5000:5000 ghcr.io/oras-project/registry:v1.0.0-rc.4
+
+      - name: Build image
+        run: |
+          docker --debug build \
+            -t localhost:5000/net-monitor:v1 \
+            https://github.com/wabbit-networks/net-monitor.git#main
+
+      - name: Push image
+        run: |
+          docker push localhost:5000/net-monitor:v1
+
+      - name: Capture image digest
+        run: |
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' localhost:5000/net-monitor:v1 | cut -d@ -f2)
+          echo "IMAGE_DIGEST=$DIGEST" >> $GITHUB_ENV
