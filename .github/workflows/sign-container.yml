@@ -70,4 +70,4 @@ jobs:
           timestamp_root_cert: ".github/certs/msft-tsa-root.crt"
 
       - name: Check signed image
-        run: notation ls "$IMAGE"
+        run: notation inspect "$IMAGE"
