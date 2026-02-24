@@ -78,11 +78,13 @@ jobs:
       - name: Sign image (with timestamp)
         uses: notaryproject/notation-action/sign@v1
         with:
+          plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.0_linux_amd64.tar.gz 
+          plugin_checksum: 459075a5cdadcdba334b728838d617fa330f19b45848ba993a4d2a061f49d4ac
           plugin_name: azure-artifactsigning
           key_id: jaxelr
           target_artifact_reference: ${{ env.IMAGE }}
           timestamp_url: "http://timestamp.acs.microsoft.com/"
           timestamp_root_cert: ".github/certs/msft-tsa-root.crt"
 
-      - name: Check image (post-sign)
+      - name: Check signed image
         run: notation ls "$IMAGE"
