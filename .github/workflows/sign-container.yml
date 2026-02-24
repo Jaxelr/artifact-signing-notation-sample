@@ -56,4 +56,7 @@ jobs:
       - name: Capture image digest
         run: |
           DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' localhost:5000/net-monitor:v1 | cut -d@ -f2)
-          echo "IMAGE_DIGEST=$DIGEST" >> $GITHUB_ENV
+
+      - name: Show image digest
+        run: |
+          echo "${IMAGE_DIGEST}"
