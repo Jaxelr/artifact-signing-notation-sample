@@ -1,0 +1,28 @@
+---
+# Github workflow to sign container images with artifact signing
+name: Sign
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Notation CLI
+        uses: notaryproject/notation-action/setup@v1
+        with:
+          version: "1.3.1"
+
+      - name: Install Azure Artifact Signing Notation plugin
+        run: |
+          notation plugin install \
+            --url https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.0_linux_amd64.tar.gz \
+            --sha256sum 459075a5cdadcdba334b728838d617fa330f19b45848ba993a4d2a061f49d4ac
+
+      - name: Verify plugin installed
+        run: notation plugin ls
