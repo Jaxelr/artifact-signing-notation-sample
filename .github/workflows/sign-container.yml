@@ -38,8 +38,7 @@ jobs:
 
       - name: Capture IMAGE reference
         run: |
-          IMAGE_REF=$(docker inspect --format='{{index .RepoDigests 0}}' localhost:5000/net-monitor:v1)
-          echo "IMAGE=$IMAGE_REF" >> $GITHUB_ENV
+          echo "IMAGE=localhost:5000/net-monitor:v1" >> $GITHUB_ENV
 
       - name: Download TSA root certificate
         run: |
