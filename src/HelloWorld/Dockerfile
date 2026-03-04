@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /app
 
 # Copy solution and project files
-COPY *.sln ./
+COPY *.slnx ./
 COPY src/HelloWorld/*.csproj src/HelloWorld/
 
 # Restore dependencies
