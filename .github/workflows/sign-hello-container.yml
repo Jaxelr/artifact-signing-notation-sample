@@ -1,6 +1,6 @@
 ---
-# Github workflow to sign container images with artifact signing
-name: Sign
+# GitHub workflow to sign dotnet image with artifact signing
+name: Sign hello container image
 
 on:
   push:
@@ -57,7 +57,7 @@ jobs:
       - name: Sign image
         uses: notaryproject/notation-action/sign@v1
         with:
-          plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.0_linux_amd64.tar.gz 
+          plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.0_linux_amd64.tar.gz
           plugin_checksum: 459075a5cdadcdba334b728838d617fa330f19b45848ba993a4d2a061f49d4ac
           plugin_name: azure-artifactsigning
           key_id: jaxelr
