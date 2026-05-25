@@ -58,7 +58,7 @@ jobs:
         uses: notaryproject/notation-action/sign@v1
         with:
           plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.1/notation-azure-artifactsigning_1.1.1_linux_amd64.tar.gz
-          plugin_checksum: b97d6a83e0b5099e679cc9c1962771cb8e0ff525cc39f0dab170ca23243c4e51
+          plugin_checksum: 5ad180f8b88f5ac735db7b2ea937c3a57e41c4ae94f60f25227aa51a660cf0a3
           plugin_name: azure-artifactsigning
           key_id: jaxelr
           target_artifact_reference: ${{ env.IMAGE }}
