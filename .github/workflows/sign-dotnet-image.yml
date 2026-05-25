@@ -57,7 +57,7 @@ jobs:
       - name: Sign dotnet image
         uses: notaryproject/notation-action/sign@v1
         with:
-          plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.0/notation-azure-artifactsigning_1.1.1_linux_amd64.tar.gz
+          plugin_url: https://github.com/Azure/artifact-signing-notation-plugin/releases/download/v1.1.1/notation-azure-artifactsigning_1.1.1_linux_amd64.tar.gz
           plugin_checksum: b97d6a83e0b5099e679cc9c1962771cb8e0ff525cc39f0dab170ca23243c4e51
           plugin_name: azure-artifactsigning
           key_id: jaxelr
